@@ -42,13 +42,13 @@ function Dropzone(props) {
               props.changeState({kycDocuments: [...kycDocuments, data]});
 
               overlay['opacity'] = 0;
-              overlay['zindex'] = 0;
+              overlay['zindex'] = -1;
               props.changeState({overlay});
             });
           })
           .catch(error => {
             overlay['opacity'] = 0;
-            overlay['zindex'] = 0;
+            overlay['zindex'] = -1;
             props.changeState({overlay});
 
             let o = error.toJSON();
@@ -130,7 +130,7 @@ class Kyc extends Component {
       this.props.changeState({step: 'done'});
     }
     overlay['opacity'] = 0;
-    overlay['zindex'] = 0;
+    overlay['zindex'] = -1;
     this.props.changeState({overlay});
   };
 
@@ -224,7 +224,7 @@ class Kyc extends Component {
     return false;
   };
 
-  uploadSigSpecimen = (signature) => {
+  uploadSigSpecimen = signature => {
     let arr = signature.split(','),
       mime = arr[0].match(/:(.*?);/)[1],
       bstr = atob(arr[1]),
@@ -237,17 +237,21 @@ class Kyc extends Component {
 
     const data = new FormData();
     data.append('file', file);
-    API.post(`${this.props.bankApi.endpoint}/clients/${this.props.bankApi.clientId}/signature`, data, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${this.props.bankApi.authToken}`,
+    API.post(
+      `${this.props.bankApi.endpoint}/clients/${this.props.bankApi.clientId}/signature`,
+      data,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${this.props.bankApi.authToken}`,
+        },
       },
-    })
+    )
       .then(res => {
         console.log(res);
       })
       .catch(error => {
-        console.log(error)
+        console.log(error);
         // overlay['opacity'] = 0;
         // overlay['zindex'] = 0;
         // props.changeState({overlay});
@@ -265,13 +269,13 @@ class Kyc extends Component {
         //     </label>
         //   </div>,
         // );
-      });    
-  }
+      });
+  };
 
   componentDidMount = () => {
     let overlay = this.props.overlay;
     overlay['opacity'] = 0;
-    overlay['zindex'] = 0;
+    overlay['zindex'] = -1;
     this.props.changeState({overlay});
   };
 
@@ -289,7 +293,7 @@ class Kyc extends Component {
           draggable
           pauseOnHover
         />
-        <div className="form-holder dpz">
+        <div className="form-holder">
           <h2>Upload KYC Documents</h2>
           <Dropzone
             kycDocuments={this.props.kycDocuments}
@@ -322,29 +326,42 @@ class Kyc extends Component {
           </span>
         </div>
         <div className="form-holder dpz">
-          <h2>Specimen Signature</h2>    
-          <label>Please sign within the dotted border line</label>      
-          <div className="specimen-sign">            
-            <SignaturePad ref={ref => (this.signaturePad1 = ref)} />
+          <h2>Specimen Signature</h2>
+          <label>Please sign within the dotted border line</label>
+          <div className="specimen-sign">
+            <SignaturePad
+              ref={ref => (this.signaturePad1 = ref)}
+              height={200}
+            />
           </div>
-          <h4 style={{textAlign:'center'}}>Signature 1</h4>
-          <div className="specimen-sign">            
-            <SignaturePad ref={ref => (this.signaturePad2 = ref)} />            
+          <h4 style={{textAlign: 'center'}}>Signature 1</h4>
+          <div className="specimen-sign">
+            <SignaturePad
+              ref={ref => (this.signaturePad2 = ref)}
+              height={200}
+            />
           </div>
-          <h4 style={{textAlign:'center'}}>Signature 2</h4>
-          <div className="specimen-sign">            
-            <SignaturePad ref={ref => (this.signaturePad3 = ref)} />
+          <h4 style={{textAlign: 'center'}}>Signature 2</h4>
+          <div className="specimen-sign">
+            <SignaturePad
+              ref={ref => (this.signaturePad3 = ref)}
+              height={200}
+            />
           </div>
-          <h4 style={{textAlign:'center'}}>Signature 3</h4>
-          <div className="specimen-sign">            
-            <SignaturePad ref={ref => (this.signaturePad4 = ref)} />
+          <h4 style={{textAlign: 'center'}}>Signature 3</h4>
+          <div className="specimen-sign">
+            <SignaturePad
+              ref={ref => (this.signaturePad4 = ref)}
+              height={200}
+            />
           </div>
-          <h4 style={{textAlign:'center'}}>Signature 4</h4> 
+          <h4 style={{textAlign: 'center'}}>Signature 4</h4>
         </div>
-        <div className="form-holder">&nbsp;</div>
-        <button name="submit" className="form-submit">
-          <span>Submit</span>
-        </button>
+        <div className="container" style={{margin: '70px 0 30px 0'}}>
+          <button name="submit" className="btn btn-primary form-submit">
+            <span>Submit</span>
+          </button>
+        </div>
       </form>
     );
   }

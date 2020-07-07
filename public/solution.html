@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="Robert John Rico" />
+    <title>CloudFive - Red Hat Hackathon+</title>
+    <link href="./assets/dist/css/bootstrap.css" rel="stylesheet" />
+    <link
+      href="//fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="//cdn.linearicons.com/free/1.0.0/icon-font.min.css"
+    />
+    <!-- Custom styles for this template -->
+    <link href="./assets/cover.css" rel="stylesheet" />
+  </head>
+  <body class="text-center">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+      <header class="masthead mb-auto">
+        <div class="inner">
+          <h3 class="masthead-brand">
+            <a href="/"
+              ><img src="./assets/brand/icloud.svg" class="logo" />CloudFive</a
+            >
+          </h3>
+          <nav class="nav nav-masthead justify-content-center">
+            <a class="nav-link" href="map.html">Branch &amp; ATM</a>
+            <a class="nav-link" href="use-case.html">Use Case</a>
+            <a class="nav-link active" href="solution.html">Solution</a>
+            <a class="nav-link" href="about.html">About</a>
+          </nav>
+        </div>
+      </header>
+
+      <main role="main" class="inner cover">
+        <p style="text-align: left;">
+          The registration communicates to the "Bank" Microservices - where
+          inputs are verified, validated and collected. It follows an
+          orchestrated workflow, different API invocation, thus the 3-step
+          registration.
+        </p>
+        <p class="steps">
+          <span
+            ><label>1</label> Customer Data Input
+            <small
+              >Complete all the required fields and submit the customer
+              information form</small
+            ></span
+          >
+          <span
+            ><label>2</label> SMS OTP
+            <small
+              >Validate transaction using the One-Time-Pin sent to mobile
+              number</small
+            ></span
+          >
+          <span
+            ><label>3</label> Know Your Customer
+            <small
+              >Upload ID image file. and sign the specimen card embed in the
+              form</small
+            >
+          </span>
+        </p>
+        <p style="text-align: left;">
+          The microservice utilizes other solutions provider in sending
+          notification, log aggregation, and object storage. Texts from the
+          uploaded ID image file are extracted using
+          <a
+            href="https://developer.ibm.com/technologies/artificial-intelligence/models/max-ocr/"
+            class="ext-link"
+            target="_blank"
+            >IBM Developer's MAX OCR Model<i class="lnr lnr-arrow-right"></i
+          ></a>
+        </p>
+        <p><img src="./assets/brand/architecture.png" class="archi" /></p>
+      </main>
+
+      <footer class="mastfoot mt-auto">
+        <div class="inner">
+          <p>Hosted on <a href="/">Red Hat Openshift</a></p>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

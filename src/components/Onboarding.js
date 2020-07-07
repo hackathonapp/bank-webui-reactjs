@@ -199,9 +199,8 @@ class Onboarding extends Component {
       overlay['opacity'] = 1;
       overlay['zindex'] = 800;
       this.props.changeState({overlay});
-      const { emailAddress } = this.props.onboarding
-      if (emailAddress === undefined)
-        console.log('Check email address');
+      const {emailAddress} = this.props.onboarding;
+      if (emailAddress === undefined) console.log('Check email address');
       let exists = await this.checkIfExists(emailAddress);
       if (!exists) {
         API.post(
@@ -215,7 +214,7 @@ class Onboarding extends Component {
         )
           .then(res => {
             overlay['opacity'] = 0;
-            overlay['zindex'] = 0;
+            overlay['zindex'] = -1;
             this.props.changeState({overlay});
 
             let bankApi = this.props.bankApi;
@@ -246,9 +245,9 @@ class Onboarding extends Component {
           });
       } else {
         let errors = this.props.errors;
-        let label = 'Please use another email address.';        
+        let label = 'Please use another email address.';
         errors['emailAddress'] = label;
-        this.props.changeState({errors, ['emailAddress']: label});
+        this.props.changeState({errors});
         e.target['emailAddress'].classList.add('error');
         toast.error(
           <div className="toast">
@@ -261,7 +260,7 @@ class Onboarding extends Component {
         );
       }
       overlay['opacity'] = 0;
-      overlay['zindex'] = 0;
+      overlay['zindex'] = -1;
       this.props.changeState({overlay});
     } else {
       let label = 'Please check the required fields and format';
@@ -314,7 +313,7 @@ class Onboarding extends Component {
   };
 
   componentDidMount = () => {
-    console.log(this.props);
+    // console.log(this.props);
     this.getRegionProvinceCity('region');
     // this.getRegionProvinceCity('province', 'NCR');
     // this.getRegionProvinceCity('city', 'MM');
@@ -333,8 +332,8 @@ class Onboarding extends Component {
     return (
       <form onSubmit={this.setOnboarding} noValidate>
         <ToastContainer
-          position="bottom-center"
-          autoClose={5000}
+          position="top-right"
+          autoClose={3000}
           hideProgressBar={false}
           newestOnTop
           closeOnClick
@@ -343,346 +342,371 @@ class Onboarding extends Component {
           draggable
           pauseOnHover
         />
-        <h1>Account Registration</h1>
-        <h2 className="col-lg-12">Personal Information</h2>
-        <div className="col-lg-6 form-holder">
-          <label>First Name *</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder=""
-            autoComplete="off"
-            name="firstName"
-            defaultValue={onboarding.firstName}
-            onChange={this.onChange}
-            onBlur={this.onBlur}
-          />
-          <label className="error">{errors.firstName}</label>
+        <div className="row col-lg-12">
+          <p className="lead">Employment Details</p>
         </div>
-        <div className="col-lg-6 form-holder">
-          <label>Middle Name *</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder=""
-            autoComplete="off"
-            name="middleName"
-            defaultValue={onboarding.middleName}
-            onChange={this.onChange}
-            onBlur={this.onBlur}
-          />
-          <label className="error">{errors.middleName}</label>
-        </div>
-        <div className="col-lg-8 form-holder">
-          <label>Last Name *</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder=""
-            autoComplete="off"
-            name="lastName"
-            defaultValue={onboarding.lastName}
-            onChange={this.onChange}
-            onBlur={this.onBlur}
-          />
-          <label className="error">{errors.lastName}</label>
-        </div>
-        <div className="col-lg-4 form-holder">
-          <label>Suffix Name</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder=""
-            autoComplete="off"
-            name="suffixName"
-            defaultValue={onboarding.suffixName}
-            onChange={this.onChange}
-          />
-        </div>
-        <div className="col-lg-12 form-holder">
-          <label>Email Address *</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder=""
-            autoComplete="off"
-            name="emailAddress"
-            defaultValue={onboarding.emailAddress}
-            onChange={this.onChange}
-            onBlur={this.onBlur}
-          />
-          <label className="error">{errors.emailAddress}</label>
-        </div>
-        <div className="col-lg-6 form-holder">
-          <label>Mobile Number *</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder=""
-            autoComplete="off"
-            name="mobileNumber"
-            defaultValue={onboarding.mobileNumber}
-            onChange={this.onChange}
-            onBlur={this.onBlur}
-          />
-          <label className="error">{errors.mobileNumber}</label>
-        </div>
-        <div className="col-lg-6 form-holder">
-          <label>Telephone Number *</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder=""
-            autoComplete="off"
-            name="telephoneNumber"
-            defaultValue={onboarding.telephoneNumber}
-            onChange={this.onChange}
-            onBlur={this.onBlur}
-          />
-          <label className="error">{errors.telephoneNumber}</label>
-        </div>
-        <div className="col-lg-6 form-holder">
-          <label>Gender *</label>
-          <Select
-            name="gender"
-            options={[
-              {value: 'Male', label: 'Male'},
-              {value: 'Female', label: 'Female'},
-              {value: 'Other', label: 'Other'},
-            ]}
-            handleSelectChange={this.onSelectChange}
-            selectedValue={onboarding.gender}
-          />
-          <span className="lnr lnr-chevron-down lnr-right"></span>
-          <label className="error">{errors.gender}</label>
-        </div>
-        <div className="col-lg-6 form-holder">
-          <label>Civil Status *</label>
-          <Select
-            name="civilStatus"
-            options={[
-              {value: 'Single', label: 'Single'},
-              {value: 'Married', label: 'Married'},
-              {value: 'Separated', label: 'Separated'},
-              {value: 'Widowed', label: 'Widowed'},
-            ]}
-            handleSelectChange={this.onSelectChange}
-            selectedValue={onboarding.civilStatus}
-          />
-          <span className="lnr lnr-chevron-down lnr-right"></span>
-          <label className="error">{errors.civilStatus}</label>
-        </div>
-        <div className="col-lg-6 form-holder">
-          <label>Birthdate *</label>
-          <div className="col-lg-12" style={{padding: 0}}>
-            <DatePicker
-              name="birthdate"
-              showPopperArrow={false}
-              showYearDropdown
-              dateFormat="MMMM dd, yyyy"
-              selected={datepicker}
-              onChange={date => this.onDateChange(date)}
+        <div className="row">
+          <div className="col-lg-6 form-group">
+            <label>First Name *</label>
+            <input
+              type="text"
               className="form-control"
+              placeholder=""
+              autoComplete="off"
+              name="firstName"
+              defaultValue={onboarding.firstName}
+              onChange={this.onChange}
+              onBlur={this.onBlur}
             />
-            <label className="error">{errors.birthdate}</label>
+            <label className="error">{errors.firstName}</label>
           </div>
-          <span className="lnr lnr-calendar-full lnr-right"></span>
+          <div className="col-lg-6 form-group">
+            <label>Middle Name *</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder=""
+              autoComplete="off"
+              name="middleName"
+              defaultValue={onboarding.middleName}
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+            />
+            <label className="error">{errors.middleName}</label>
+          </div>
         </div>
-        <div className="col-lg-6 form-holder">
-          <label>Place of Birth *</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder=""
-            autoComplete="off"
-            name="birthplace"
-            defaultValue={onboarding.birthplace}
-            onChange={this.onChange}
-            onBlur={this.onBlur}
-          />
-          <label className="error">{errors.birthplace}</label>
+        <div className="row">
+          <div className="col-lg-8 form-group">
+            <label>Last Name *</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder=""
+              autoComplete="off"
+              name="lastName"
+              defaultValue={onboarding.lastName}
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+            />
+            <label className="error">{errors.lastName}</label>
+          </div>
+          <div className="col-lg-4 form-group">
+            <label>Suffix Name</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder=""
+              autoComplete="off"
+              name="suffixName"
+              defaultValue={onboarding.suffixName}
+              onChange={this.onChange}
+            />
+          </div>
         </div>
-        <div className="col-lg-6 form-holder">
-          <label>Nationality *</label>
-          <Select
-            name="nationality"
-            options={[
-              {value: 'Filipino', label: 'Filipino'},
-              {value: 'Non-Filipino', label: 'Non-Filipino'},
-            ]}
-            handleSelectChange={this.onSelectChange}
-            selectedValue={onboarding.nationality}
-          />
-          <span className="lnr lnr-chevron-down lnr-right"></span>
+        <div className="row">
+          <div className="col-lg-12 form-group">
+            <label>Email Address *</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder=""
+              autoComplete="off"
+              name="emailAddress"
+              defaultValue={onboarding.emailAddress}
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+            />
+            <label className="error">{errors.emailAddress}</label>
+          </div>
         </div>
-        <div className="col-lg-12 form-holder">&nbsp;</div>
-        <h2 className="col-lg-12">Current Address</h2>
-        <div className="col-lg-4 form-holder">
-          <label>House Number *</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder=""
-            autoComplete="off"
-            name="address1"
-            defaultValue={onboarding.address1}
-            onChange={this.onChange}
-            onBlur={this.onBlur}
-          />
-          <label className="error">{errors.address1}</label>
+        <div className="row">
+          <div className="col-lg-6 form-group">
+            <label>Mobile Number *</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder=""
+              autoComplete="off"
+              name="mobileNumber"
+              defaultValue={onboarding.mobileNumber}
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+            />
+            <label className="error">{errors.mobileNumber}</label>
+          </div>
+          <div className="col-lg-6 form-group">
+            <label>Telephone Number *</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder=""
+              autoComplete="off"
+              name="telephoneNumber"
+              defaultValue={onboarding.telephoneNumber}
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+            />
+            <label className="error">{errors.telephoneNumber}</label>
+          </div>
         </div>
-        <div className="col-lg-8 form-holder">
-          <label>Street / Village / Subdivision *</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder=""
-            autoComplete="off"
-            name="address2"
-            defaultValue={onboarding.address2}
-            onChange={this.onChange}
-            onBlur={this.onBlur}
-          />
-          <label className="error">{errors.address2}</label>
+        <div className="row">
+          <div className="col-lg-6 form-group">
+            <label>Gender *</label>
+            <Select
+              name="gender"
+              options={[
+                {value: 'Male', label: 'Male'},
+                {value: 'Female', label: 'Female'},
+                {value: 'Other', label: 'Other'},
+              ]}
+              handleSelectChange={this.onSelectChange}
+              selectedValue={onboarding.gender}
+            />
+            <label className="error">{errors.gender}</label>
+          </div>
+          <div className="col-lg-6 form-group">
+            <label>Civil Status *</label>
+            <Select
+              name="civilStatus"
+              options={[
+                {value: 'Single', label: 'Single'},
+                {value: 'Married', label: 'Married'},
+                {value: 'Separated', label: 'Separated'},
+                {value: 'Widowed', label: 'Widowed'},
+              ]}
+              handleSelectChange={this.onSelectChange}
+              selectedValue={onboarding.civilStatus}
+            />
+            <label className="error">{errors.civilStatus}</label>
+          </div>
         </div>
-        <div className="col-lg-6 form-holder">
-          <label>Region *</label>
-          <Select
-            name="region"
-            options={regions}
-            handleSelectChange={this.onSelectChange}
-            selectedValue={onboarding.region}
-          />
-          <span className="lnr lnr-chevron-down lnr-right"></span>
-          <label className="error">{errors.region}</label>
+        <div className="row">
+          <div className="col-lg-6 form-group">
+            <label>Birthdate *</label>
+            <div className="col-lg-12" style={{padding: 0}}>
+              <DatePicker
+                name="birthdate"
+                showPopperArrow={false}
+                showYearDropdown
+                dateFormat="MMMM dd, yyyy"
+                selected={datepicker}
+                onChange={date => this.onDateChange(date)}
+                className="form-control"
+              />
+              <label className="error">{errors.birthdate}</label>
+            </div>
+          </div>
+          <div className="col-lg-6 form-group">
+            <label>Place of Birth *</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder=""
+              autoComplete="off"
+              name="birthplace"
+              defaultValue={onboarding.birthplace}
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+            />
+            <label className="error">{errors.birthplace}</label>
+          </div>
         </div>
-        <div className="col-lg-6 form-holder">
-          <label>Province *</label>
-          <Select
-            name="province"
-            options={provinces}
-            handleSelectChange={this.onSelectChange}
-            selectedValue={onboarding.province}
-          />
-          <span className="lnr lnr-chevron-down lnr-right"></span>
-          <label className="error">{errors.province}</label>
+        <div className="row">
+          <div className="col-lg-6 form-group">
+            <label>Nationality *</label>
+            <Select
+              name="nationality"
+              options={[
+                {value: 'Filipino', label: 'Filipino'},
+                {value: 'Non-Filipino', label: 'Non-Filipino'},
+              ]}
+              handleSelectChange={this.onSelectChange}
+              selectedValue={onboarding.nationality}
+            />
+          </div>
         </div>
-        <div className="col-lg-6 form-holder">
-          <label>City *</label>
-          <Select
-            name="city"
-            options={cities}
-            handleSelectChange={this.onSelectChange}
-            selectedValue={onboarding.city}
-          />
-          <span className="lnr lnr-chevron-down lnr-right"></span>
-          <label className="error">{errors.city}</label>
+
+        <div className="row col-lg-12">
+          <p className="lead">Current Address</p>
         </div>
-        <div className="col-lg-6 form-holder">
-          <label>Zip Code *</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder=""
-            autoComplete="off"
-            name="zipcode"
-            defaultValue={onboarding.zipcode}
-            onChange={this.onChange}
-            onBlur={this.onBlur}
-          />
-          <label className="error">{errors.zipcode}</label>
+
+        <div className="row">
+          <div className="col-lg-4 form-group">
+            <label>House Number *</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder=""
+              autoComplete="off"
+              name="address1"
+              defaultValue={onboarding.address1}
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+            />
+            <label className="error">{errors.address1}</label>
+          </div>
+          <div className="col-lg-8 form-group">
+            <label>Street / Village / Subdivision *</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder=""
+              autoComplete="off"
+              name="address2"
+              defaultValue={onboarding.address2}
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+            />
+            <label className="error">{errors.address2}</label>
+          </div>
         </div>
-        <div className="col-lg-12 form-holder">&nbsp;</div>
-        <h2 className="col-lg-12">Employment Details</h2>
-        <div className="col-lg-6 form-holder">
-          <label>Income Type *</label>
-          <Select
-            name="incomeType"
-            options={[
-              {value: 'Employed', label: 'Employed'},
-              {value: 'Self-employed', label: 'Self-employed'},
-              {value: 'Remittance / Other', label: 'Remittance / Other'},
-            ]}
-            handleSelectChange={this.onSelectChange}
-            selectedValue={onboarding.incomeType}
-          />
-          <span className="lnr lnr-chevron-down lnr-right"></span>
-          <label className="error">{errors.incomeType}</label>
+        <div className="row">
+          <div className="col-lg-6 form-group">
+            <label>Region *</label>
+            <Select
+              name="region"
+              options={regions}
+              handleSelectChange={this.onSelectChange}
+              selectedValue={onboarding.region}
+            />
+            <label className="error">{errors.region}</label>
+          </div>
+          <div className="col-lg-6 form-group">
+            <label>Province *</label>
+            <Select
+              name="province"
+              options={provinces}
+              handleSelectChange={this.onSelectChange}
+              selectedValue={onboarding.province}
+            />
+            <label className="error">{errors.province}</label>
+          </div>
         </div>
-        <div className="col-lg-6 form-holder">
-          <label>TIN *</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder=""
-            autoComplete="off"
-            name="tin"
-            defaultValue={onboarding.tin}
-            onChange={this.onChange}
-            onBlur={this.onBlur}
-          />
-          <label className="error">{errors.tin}</label>
+        <div className="row">
+          <div className="col-lg-6 form-group">
+            <label>City *</label>
+            <Select
+              name="city"
+              options={cities}
+              handleSelectChange={this.onSelectChange}
+              selectedValue={onboarding.city}
+            />
+            <label className="error">{errors.city}</label>
+          </div>
+          <div className="col-lg-6 form-group">
+            <label>Zip Code *</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder=""
+              autoComplete="off"
+              name="zipcode"
+              defaultValue={onboarding.zipcode}
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+            />
+            <label className="error">{errors.zipcode}</label>
+          </div>
         </div>
-        <div className="col-lg-6 form-holder">
-          <label>Employer / Business Name *</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder=""
-            autoComplete="off"
-            name="employerBusiness"
-            defaultValue={onboarding.employerBusiness}
-            onChange={this.onChange}
-            onBlur={this.onBlur}
-          />
-          <label className="error">{errors.employerBusiness}</label>
+        <div className="row col-lg-12">
+          <p className="lead">Employment Details</p>
         </div>
-        <div className="col-lg-6 form-holder">
-          <label>Nature of Business / Work</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder=""
-            autoComplete="off"
-            name="workBusinessNature"
-            defaultValue={onboarding.workBusinessNature}
-            onChange={this.onChange}
-            onBlur={this.onBlur}
-          />
-          <label className="error">{errors.workBusinessNature}</label>
+        <div className="row">
+          <div className="col-lg-6 form-group">
+            <label>Income Type *</label>
+            <Select
+              name="incomeType"
+              options={[
+                {value: 'Employed', label: 'Employed'},
+                {value: 'Self-employed', label: 'Self-employed'},
+                {value: 'Remittance / Other', label: 'Remittance / Other'},
+              ]}
+              handleSelectChange={this.onSelectChange}
+              selectedValue={onboarding.incomeType}
+            />
+            <label className="error">{errors.incomeType}</label>
+          </div>
+          <div className="col-lg-6 form-group">
+            <label>TIN *</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder=""
+              autoComplete="off"
+              name="tin"
+              defaultValue={onboarding.tin}
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+            />
+            <label className="error">{errors.tin}</label>
+          </div>
         </div>
-        <div className="col-lg-6 form-holder">
-          <label>Occupation *</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder=""
-            autoComplete="off"
-            name="occupation"
-            defaultValue={onboarding.occupation}
-            onChange={this.onChange}
-            onBlur={this.onBlur}
-          />
-          <label className="error">{errors.occupation}</label>
+        <div className="row">
+          <div className="col-lg-6 form-group">
+            <label>Employer / Business Name *</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder=""
+              autoComplete="off"
+              name="employerBusiness"
+              defaultValue={onboarding.employerBusiness}
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+            />
+            <label className="error">{errors.employerBusiness}</label>
+          </div>
+          <div className="col-lg-6 form-group">
+            <label>Nature of Business / Work</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder=""
+              autoComplete="off"
+              name="workBusinessNature"
+              defaultValue={onboarding.workBusinessNature}
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+            />
+            <label className="error">{errors.workBusinessNature}</label>
+          </div>
         </div>
-        <div className="col-lg-6 form-holder">
-          <label>Gross Monthly Income *</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder=""
-            autoComplete="off"
-            name="monthlyIncome"
-            defaultValue={onboarding.monthlyIncome}
-            onChange={this.onChange}
-            onBlur={this.onBlur}
-          />
-          <label className="error">{errors.monthlyIncome}</label>
+        <div className="row">
+          <div className="col-lg-6 form-group">
+            <label>Occupation *</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder=""
+              autoComplete="off"
+              name="occupation"
+              defaultValue={onboarding.occupation}
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+            />
+            <label className="error">{errors.occupation}</label>
+          </div>
+          <div className="col-lg-6 form-group">
+            <label>Gross Monthly Income *</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder=""
+              autoComplete="off"
+              name="monthlyIncome"
+              defaultValue={onboarding.monthlyIncome}
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+            />
+            <label className="error">{errors.monthlyIncome}</label>
+          </div>
         </div>
-        <div className="col-lg-12 form-holder">&nbsp;</div>
-        <button name="submit" className="form-submit">
-          <span>Next</span>
-        </button>
+        <div className="row col-lg-12">&nbsp;</div>
+        <div className="row col-lg-12">
+          <button name="submit" className="btn btn-primary form-submit">
+            <span>Next</span>
+          </button>
+        </div>
       </form>
     );
   }

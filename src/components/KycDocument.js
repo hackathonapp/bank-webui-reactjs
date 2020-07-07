@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 function KycItem(props) {
   let uploadedFile = {
-    backgroundImage: `url(${props.kyc.dropzoneData.objUrl})`,    
+    backgroundImage: `url(${props.kyc.dropzoneData.objUrl})`,
   };
 
   let statusClass = 'file-invalid';
@@ -15,13 +15,23 @@ function KycItem(props) {
   return (
     <tr>
       <td>
-        <div className="file-image" style={uploadedFile}>&nbsp;</div>
+        <div className="file-image" style={uploadedFile}>
+          &nbsp;
+        </div>
       </td>
       <td>{props.kyc.respData.ocr.kycType}</td>
       <td>{props.kyc.respData.ocr.kycRef}</td>
       <td>{props.kyc.respData.filename}</td>
-      <td width="50px"><span className={statusClass}>{statusLabel}</span></td>
-      <td width="50px"><span className="lnr lnr-trash remove-file" data-uuid="{props.kyc.id}" onClick={props.delKyc.bind(this, props.kyc._id)}></span></td>
+      <td width="50px">
+        <span className={statusClass}>{statusLabel}</span>
+      </td>
+      <td width="50px">
+        <span
+          className="lnr lnr-trash remove-file"
+          data-uuid="{props.kyc.id}"
+          onClick={props.delKyc.bind(this, props.kyc._id)}
+        ></span>
+      </td>
     </tr>
   );
 }
@@ -32,13 +42,17 @@ class KycDocument extends Component {
     if (this.props.kycs.length <= 0) {
       return (
         <tr>
-          <td colSpan="6"><p style={{textAlign:'center',padding:'5px 0'}}>No files uploaded</p></td>
+          <td colSpan="6">
+            <p style={{textAlign: 'center', padding: '15px 0 0 0'}}>
+              No files uploaded
+            </p>
+          </td>
         </tr>
       );
     } else {
-      return this.props.kycs.map((kyc) => {
-        return <KycItem key={kyc._id} kyc={kyc} delKyc={this.props.delKyc}/>;
-      });  
+      return this.props.kycs.map(kyc => {
+        return <KycItem key={kyc._id} kyc={kyc} delKyc={this.props.delKyc} />;
+      });
     }
   }
 }

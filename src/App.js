@@ -6,6 +6,7 @@ import Kyc from './components/Kyc';
 import AccountCreated from './components/AccountCreated';
 import propState from './props';
 import MainPage from './components/MainPage';
+import Login from './components/Login';
 
 function OnboardSteps(props) {
   let overlay = {
@@ -16,68 +17,56 @@ function OnboardSteps(props) {
   switch (props.step) {
     case 'onboarding':
       return (
-        <div className="wrapper">
-          <div className="inner">
-            <img src="images/myimage-1.png" alt="" className="image-1" />
-            <Onboarding
-              bankApi={props.bankApi}
-              onboarding={props.onboarding}
-              errors={props.errors}
-              regions={props.regions}
-              provinces={props.provinces}
-              cities={props.cities}
-              datepicker={props.datepicker}
-              changeState={props.changeState}
-              overlay={props.overlay}
-            />
-            <img src="images/myimage-2.png" alt="" className="image-2" />
-          </div>
+        <div className="onboarding">
+          <Onboarding
+            bankApi={props.bankApi}
+            onboarding={props.onboarding}
+            errors={props.errors}
+            regions={props.regions}
+            provinces={props.provinces}
+            cities={props.cities}
+            datepicker={props.datepicker}
+            changeState={props.changeState}
+            overlay={props.overlay}
+          />
           <div style={overlay} className="overlay">
             <div className="loading">
-              <img src="images/Cube-1s-200px.gif" alt="" />
+              <img src="./assets/brand/cloud.svg" alt="" />
             </div>
           </div>
         </div>
       );
     case 'otp':
       return (
-        <div className="wrapper">
-          <div className="inner">
-            <img src="images/myimage-1.png" alt="" className="image-1" />
-            <Otp
-              bankApi={props.bankApi}
-              otp={props.otp}
-              otpCode={props.otpCode}
-              otpMobileNumber={props.otpMobileNumber}
-              changeState={props.changeState}
-              overlay={props.overlay}
-            />
-            <img src="images/myimage-2.png" alt="" className="image-2" />
-          </div>
+        <div className="onboarding otp">
+          <Otp
+            bankApi={props.bankApi}
+            otp={props.otp}
+            otpCode={props.otpCode}
+            otpMobileNumber={props.otpMobileNumber}
+            changeState={props.changeState}
+            overlay={props.overlay}
+          />
           <div style={overlay} className="overlay">
             <div className="loading">
-              <img src="images/Cube-1s-200px.gif" alt="" />
+              <img src="./assets/brand/cloud.svg" alt="" />
             </div>
           </div>
         </div>
       );
     case 'kyc':
       return (
-        <div className="wrapper">
-          <div className="inner">
-            <img src="images/myimage-1.png" alt="" className="image-1" />
-            <Kyc
-              bankApi={props.bankApi}
-              changeState={props.changeState}
-              overlay={props.overlay}
-              onboarding={props.onboarding}
-              kycDocuments={props.kycDocuments}
-            />
-            <img src="images/myimage-2.png" alt="" className="image-2" />
-          </div>
+        <div className="onboarding kyc">
+          <Kyc
+            bankApi={props.bankApi}
+            changeState={props.changeState}
+            overlay={props.overlay}
+            onboarding={props.onboarding}
+            kycDocuments={props.kycDocuments}
+          />
           <div style={overlay} className="overlay">
             <div className="loading">
-              <img src="images/Cube-1s-200px.gif" alt="" />
+              <img src="./assets/brand/cloud.svg" alt="" />
             </div>
           </div>
         </div>
@@ -96,7 +85,7 @@ class App extends Component {
 
   componentDidMount = async () => {
     let token = await localStorage.getItem('authenticated');
-    console.log(token);
+    // console.log(token);
     if (token !== 'null' && token !== null) {
       this.changeState({authenticated: true});
     } else {
@@ -129,6 +118,18 @@ class App extends Component {
             path="/"
             render={() => (
               <MainPage
+                bankApi={this.state.bankApi}
+                login={this.state.login}
+                authenticated={this.state.authenticated}
+                changeState={this.changeState}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/login"
+            render={() => (
+              <Login
                 bankApi={this.state.bankApi}
                 login={this.state.login}
                 authenticated={this.state.authenticated}
