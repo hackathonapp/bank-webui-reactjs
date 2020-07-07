@@ -8,7 +8,9 @@ import propState from './props';
 import MainPage from './components/MainPage';
 import Login from './components/Login';
 
-function OnboardSteps(props) {
+function OnboardSteps(props) {    
+  document.body.classList.remove('full');
+  document.body.classList.remove('full2');
   let overlay = {
     opacity: props.overlay.opacity,
     zIndex: props.overlay.zindex,
@@ -16,6 +18,7 @@ function OnboardSteps(props) {
 
   switch (props.step) {
     case 'onboarding':
+      document.body.classList.add('full');      
       return (
         <div className="onboarding">
           <Onboarding
@@ -36,7 +39,7 @@ function OnboardSteps(props) {
           </div>
         </div>
       );
-    case 'otp':
+    case 'otp':      
       return (
         <div className="onboarding otp">
           <Otp
@@ -55,6 +58,7 @@ function OnboardSteps(props) {
         </div>
       );
     case 'kyc':
+      document.body.classList.add('full2');
       return (
         <div className="onboarding kyc">
           <Kyc
@@ -100,7 +104,7 @@ class App extends Component {
     this.changeState({authenticated: false});
   };
 
-  render() {
+  render() {    
     if (this.state.authenticated) {
       return (
         <div>

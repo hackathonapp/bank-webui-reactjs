@@ -265,7 +265,7 @@ class Otp extends Component {
                 className="resend-otp"
                 onClick={this.getOtp.bind(this, true)}
               >
-                RESEND CODE
+                Resend Code
               </span>
             </p>
           </div>

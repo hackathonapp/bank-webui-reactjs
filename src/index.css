@@ -96,8 +96,7 @@ form {
     padding: 30px 15px;
     background-color: #fff;
     text-align: left;
-    max-height: 680px;
-    overflow: auto; }
+  }
 
     .react-datepicker-wrapper {
       width: 100%;
@@ -127,6 +126,7 @@ form {
       font-size: 13px;
     }
     .flash-demo {
+      border-radius: 15px 15px 0 0;
       background-color: #ff8585;
       display: block;
       color: #fff;
@@ -144,10 +144,11 @@ form {
       font-size: 16px;
     }
     .resend-otp {
-      color: #14899d;
+      color: #1799ae;
       font-weight: 500;
-      letter-spacing: 1.1px;
+      letter-spacing: 0.3px;
       padding: 0 5px;
+      font-size: 17px;
       cursor: pointer;
     }
     .resend-otp:hover {
@@ -186,6 +187,7 @@ form {
     
 
     .dz-wrapper {
+      border-radius: 15px;
       min-height: 150px;
       border: 0;
       background: white;
