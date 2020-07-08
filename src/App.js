@@ -9,8 +9,6 @@ import MainPage from './components/MainPage';
 import Login from './components/Login';
 
 function OnboardSteps(props) {    
-  document.body.classList.remove('full');
-  document.body.classList.remove('full2');
   let overlay = {
     opacity: props.overlay.opacity,
     zIndex: props.overlay.zindex,
@@ -105,6 +103,8 @@ class App extends Component {
   };
 
   render() {    
+    document.body.classList.remove('full');
+    document.body.classList.remove('full2');  
     if (this.state.authenticated) {
       return (
         <div>
