@@ -7,6 +7,7 @@ import AccountCreated from './components/AccountCreated';
 import propState from './props';
 import MainPage from './components/MainPage';
 import Login from './components/Login';
+import Terms from './components/pages/Terms';
 
 function OnboardSteps(props) {    
   let overlay = {
@@ -15,6 +16,14 @@ function OnboardSteps(props) {
   };
 
   switch (props.step) {
+    case 'tc':
+      return (
+        <div className="onboarding">
+          <Terms 
+            terms={props.terms} 
+            changeState={props.changeState} />
+        </div>
+      );
     case 'onboarding':
       document.body.classList.add('full');      
       return (
@@ -147,6 +156,7 @@ class App extends Component {
               <React.Fragment>
                 <OnboardSteps
                   step={this.state.step}
+                  terms={this.state.terms}
                   bankApi={this.state.bankApi}
                   onboarding={this.state.onboarding}
                   errors={this.state.errors}

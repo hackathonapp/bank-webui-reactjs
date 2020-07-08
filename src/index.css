@@ -332,6 +332,12 @@ form {
       text-decoration: none;
     }
 
+    .terms {
+      border: 1px solid #ccc;
+      overflow: auto;
+      height: 480px;
+      padding: 0 15px;
+    }
 
     .overlay {      
       position: fixed;

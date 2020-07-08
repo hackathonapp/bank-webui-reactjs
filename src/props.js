@@ -12,7 +12,8 @@ let state = {
     onboardingToken: '',
     authToken: '',
   },
-  step: 'onboarding',
+  step: 'tc',
+  terms: false,
   onboarding: {
     firstName: '',
     middleName: '',
