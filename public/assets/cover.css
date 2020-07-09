@@ -179,3 +179,23 @@ i.lnr {
   -o-transform: rotate(-45deg);
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1.5);
 }
+
+.team-member {
+  display: inline-block;            
+  width: 150px;
+  text-align: center;
+}
+.team-member img {
+  height: 100px;
+  margin: 10px;
+}
+.team-member span {
+  display: block;
+  font-weight: 100;
+  padding: 0;
+  margin: 0 0 -8px 0;
+}
+.team-member a {
+  font-size: 10px;
+  font-weight: 100;
+}
