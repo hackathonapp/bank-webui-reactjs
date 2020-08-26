@@ -142,9 +142,9 @@ class Onboarding extends Component {
         }
         break;
       case 'telephoneNumber':
-        const rgxTelephone = /^632\d{8,9}$/;
+        const rgxTelephone = /^63\d{1,2}\d{8,9}$/;
         if (!rgxTelephone.test(value)) {
-          errors[name] = 'Invalid telephone number (63 format)';
+          errors[name] = 'Invalid telephone number (63+area code+number)';
           e.classList.add('error');
         } else {
           errors[name] = '';
@@ -425,7 +425,7 @@ class Onboarding extends Component {
             <input
               type="text"
               className="form-control"
-              placeholder=""
+              placeholder="639000000000"
               autoComplete="off"
               name="mobileNumber"
               defaultValue={onboarding.mobileNumber}
@@ -439,7 +439,7 @@ class Onboarding extends Component {
             <input
               type="text"
               className="form-control"
-              placeholder=""
+              placeholder="630000000000"
               autoComplete="off"
               name="telephoneNumber"
               defaultValue={onboarding.telephoneNumber}
@@ -657,7 +657,7 @@ class Onboarding extends Component {
             <label className="error">{errors.employerBusiness}</label>
           </div>
           <div className="col-lg-6 form-group">
-            <label>Nature of Business / Work</label>
+            <label>Nature of Business / Work *</label>
             <input
               type="text"
               className="form-control"

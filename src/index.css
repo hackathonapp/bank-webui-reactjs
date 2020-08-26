@@ -34,6 +34,7 @@ form {
     height: 20px;
     color: #7a7a7a;
   }
+  .onboarding .form-control::-webkit-input-placeholder,
   .login .form-control::-webkit-input-placeholder {
     font-size: 20px;
     font-family: "Open Sans";
@@ -41,6 +42,11 @@ form {
     color: #fff;
     transform: translateY(1px);
   }
+  .onboarding .form-control::-webkit-input-placeholder {
+    font-size: 12px;
+    color: #ccc;
+  }
+  .onboarding .form-control::-moz-placeholder,
   .login .form-control::-moz-placeholder {
     font-size: 20px;
     font-family: "Open Sans";
@@ -48,19 +54,33 @@ form {
     color: #fff;
     transform: translateY(1px);
   }
-  .login .form-control:-ms-input-placeholder {
+  .onboarding .form-control::-moz-placeholder {
+    font-size: 12px;
+    color: #ccc;
+  }
+  .onboarding .form-control::-ms-input-placeholder,
+  .login .form-control::-ms-input-placeholder {
     font-size: 20px;
     font-family: "Open Sans";
     font-weight: 100;
     color: #fff;
     transform: translateY(1px);
   }
-  .login .form-control:-moz-placeholder {
+  .onboarding .form-control::-ms-input-placeholder {
+    font-size: 12px;
+    color: #ccc;
+  }
+  .onboarding .form-control::-moz-placeholder,
+  .login .form-control::-moz-placeholder {
     font-size: 20px;
     font-family: "Open Sans";
     font-weight: 100;
     color: #fff;
     transform: translateY(1px);
+  }
+  .onboarding .form-control::-moz-placeholder {
+    font-size: 12px;
+    color: #ccc;
   }
   .login .form-holder span.lnr-lock {
     left: 15px;
