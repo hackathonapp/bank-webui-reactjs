@@ -11,6 +11,25 @@ class Login extends Component {
     this.props.changeState({login, [name]: value});
   };
 
+  getProfile = async () => {
+    let token = localStorage.getItem('authenticated');
+    await API.get(`${this.props.bankApi.endpoint}/clients/me`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(res => {
+        // console.log(res);
+        // console.log(`${res.data.firstName} ${res.data.lastName}`);
+        this.props.changeState({name: `${res.data.firstName} ${res.data.lastName}`});
+      })
+      .catch(error => {
+        // localStorage.setItem('authenticated', null);
+        // this.changeState({authenticated: false});
+      });
+  };
+
   login = async e => {
     e.preventDefault();
     const {emailAddress, password} = this.props.login;
@@ -36,10 +55,12 @@ class Login extends Component {
       .then(res => {
         console.log(res.data.token);
         let bankApi = this.props.bankApi;
-        bankApi['onboardingToken'] = res.data.token;
+        bankApi['authToken'] = res.data.token;
+        bankApi['onboardingToken'] = "";
         this.props.changeState({bankApi});
-        this.props.changeState({authenticated: true});
         localStorage.setItem('authenticated', res.data.token);
+        this.getProfile();
+        this.props.changeState({authenticated: true});        
       })
       .catch(error => {
         let code = 'ERR';
