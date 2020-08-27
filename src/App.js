@@ -8,6 +8,7 @@ import propState from './props';
 import MainPage from './components/MainPage';
 import Login from './components/Login';
 import Terms from './components/pages/Terms';
+import API from './utils/Api';
 
 function OnboardSteps(props) {    
   let overlay = {
@@ -96,9 +97,9 @@ class App extends Component {
 
   componentDidMount = async () => {
     let token = await localStorage.getItem('authenticated');
-    // console.log(token);
     if (token !== 'null' && token !== null) {
-      this.changeState({authenticated: true});
+      this.getProfile();
+      this.changeState({authenticated: true});            
     } else {
       this.changeState({authenticated: false});
       localStorage.setItem('authenticated', null);
@@ -111,13 +112,32 @@ class App extends Component {
     this.changeState({authenticated: false});
   };
 
+  getProfile = async () => {
+    let token = localStorage.getItem('authenticated');
+    await API.get(`${this.state.bankApi.endpoint}/clients/me`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(res => {
+        // console.log(res);
+        // console.log(`${res.data.firstName} ${res.data.lastName}`);
+        this.changeState({name: `${res.data.firstName} ${res.data.lastName}`});
+      })
+      .catch(error => {
+        // localStorage.setItem('authenticated', null);
+        // this.changeState({authenticated: false});
+      });
+  };  
+
   render() {    
     document.body.classList.remove('full');
     document.body.classList.remove('full2');  
     if (this.state.authenticated) {
       return (
         <div>
-          <h1>Hello World!</h1>
+          <h1>Hello, {this.state.name}!</h1>
           <a href="/" onClick={this.logout}>
             <span>Logout</span>
           </a>

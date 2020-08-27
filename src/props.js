@@ -1,14 +1,15 @@
 let state = {
   authenticated: false,
+  name: null,
   login: {
     emailAddress: '',
     password: '',
   },
   bankApi: {
     clientId: '',
-    // endpoint: 'http://localhost:3000',
+    endpoint: 'http://localhost:3000',
     // endpoint: 'https://bank-api-rjrico-hackathon-app.apps.openshift.iiht.tech',
-    endpoint: 'https://cloudfive-bank-api-cc-uc-4-cloudfive.container-crush-02-4044f3a4e314f4bcb433696c70d13be9-0000.eu-de.containers.appdomain.cloud',
+    // endpoint: 'https://cloudfive-bank-api-cc-uc-4-cloudfive.container-crush-02-4044f3a4e314f4bcb433696c70d13be9-0000.eu-de.containers.appdomain.cloud',
     onboardingToken: '',
     authToken: '',
   },
